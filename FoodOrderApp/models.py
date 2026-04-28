@@ -6,3 +6,4 @@ class Food(models.Model):
     price = models.IntegerField(default=0)
     region = models.CharField(max_length=20)
     taste = models.CharField(max_length=20)
+    quantity = models.IntegerField(default=0)
