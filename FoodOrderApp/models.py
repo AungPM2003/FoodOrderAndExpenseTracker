@@ -7,3 +7,11 @@ class Food(models.Model):
     region = models.CharField(max_length=20)
     taste = models.CharField(max_length=20)
     quantity = models.IntegerField(default=0)
+    
+
+class Cart(models.Model):
+    food = models.ForeignKey(Food,on_delete=models.CASCADE)
+    name = models.CharField(max_length=20,default="")
+    price = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
+

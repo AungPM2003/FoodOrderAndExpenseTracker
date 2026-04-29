@@ -34,6 +34,13 @@
                 </div>
             {%endfor%}
         </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <form action="{%url 'foodOrder:cart' %}" method="GET">
+                    <button type="submit">Go to Cart</button>
+                </form>
+            </div>
+        </div>
     </div>
     
 
