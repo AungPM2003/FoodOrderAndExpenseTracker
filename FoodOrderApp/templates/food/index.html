@@ -17,16 +17,17 @@
                         <div class="card-text">Region : {{food.region}}</div>
                         <div class="card-text">{{food.taset}}</div>
                         <div class="card-text">Price : {{food.price}}</div>
-                        <form action="" method="POST" class="container">
+                        <form action="{% url  'foodOrder:updateQuantity' food.id %}" method="POST" class="container">
+                            {% csrf_token %}
                             <div class="row my-1 text-center">
-                                <button type="button" class="btn btn-sm btn-secondary col" >-</button>
+                                <button type="submit" class="btn btn-sm btn-secondary col" name="action" value="decrease">-</button>
                                 <div class="card-text col">{{food.quantity}}</div>
-                                <button type="button" class="btn btn-sm btn-secondary col">+</button>
+                                <button type="submit" class="btn btn-sm btn-secondary col" name="action" value="increase">+</button>
                             </div>
                             
                             <div class="row">
 
-                                <button type="button" class="btn btn-primary w-full">Add to Cart</button>
+                                <button type="submit" class="btn btn-primary w-full" name="action" value="add">Add to Cart</button>
                             </div>
                         </form>
                     </div>

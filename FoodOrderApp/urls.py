@@ -3,5 +3,6 @@ from . import views
 
 app_name="foodOrder"
 urlpatterns = [
-    path("",views.IndexView.as_view(),name="index")
+    path("",views.IndexView.as_view(),name="index"),
+    path("<int:food_id>/updateQuantity/",views.updateQuantity,name="updateQuantity")
 ]

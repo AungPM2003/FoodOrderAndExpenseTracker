@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from django.http import request,HttpResponse
+from django.shortcuts import render,get_object_or_404
+from django.http import request,HttpResponse,HttpResponseRedirect
+from django.urls import reverse
+from django.db.models import F
 from django.views.generic import ListView
 from .models import Food
 # Create your views here.
@@ -15,3 +17,17 @@ class IndexView(ListView):
 
     def get_queryset(self):
         return Food.objects.all()
+
+def updateQuantity(request,food_id):
+    food = get_object_or_404(Food,pk=food_id)
+    if request.method == "POST":
+        action = request.POST["action"]
+        
+        if action == "increase":
+            food.quantity = F('quantity') + 1
+        elif action == "decrease" and food.quantity > 0:
+            food.quantity = F('quantity') - 1
+        elif action == "add" and food.quantity >= 0:
+            pass
+    food.save()
+    return HttpResponseRedirect(reverse("foodOrder:index"))
