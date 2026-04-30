@@ -22,6 +22,9 @@
             <div class="col text-center">
                 Price Per Item
             </div>
+            <div class="col text-center">
+                Total Price
+            </div>
         </div>
          {%for item in cart_items %}
         <div class="row justify-content-center">
@@ -35,9 +38,16 @@
                 <div class="col text-center">
                     $ {{item.price}}
                 </div>
+                <div class="col text-center">
+                    $ {{item.total}}
+                </div>
             
         </div>
-    {%endfor%}
+        {%empty%}
+        <div class="row justify-content-center">
+            You haven't added to your cart yet.
+        </div>
+        {%endfor%}
         <!-- Footer -->
         <footer class="row justify-content-center border-0 border-top border-2 border-dark py-3 mt-auto">
             <div class="col-auto">

@@ -24,18 +24,30 @@ class CartView(ListView):
     def get_queryset(self):
         return Cart.objects.all()
 
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        for item in context["cart_items"]:
+            item.total = item.quantity * item.price
+        return context
+    
+
 def updateQuantity(request,food_id):
     food = get_object_or_404(Food,pk=food_id)
+    total_price = food.quantity * food.price
     if request.method == "POST":
         action = request.POST["action"]
-        
         if action == "increase":
-            food.quantity = F('quantity') + 1
+            food.quantity += 1
         elif action == "decrease" and food.quantity > 0:
-            food.quantity = F('quantity') - 1
+            food.quantity -= 1
         elif action == "add" and food.quantity > 0:
-            total_price = food.quantity * food.price
-            cart = food.cart_set.create(name=food.name,quantity=food.quantity,price=total_price)
-            cart.save()
+            existing_cart = food.cart_set.filter(name=food.name).first()
+            if existing_cart:
+                existing_cart.quantity += food.quantity
+                existing_cart.save()
+            else:
+                cart = food.cart_set.create(name=food.name,price=food.price,quantity=food.quantity)
+                cart.save()
+            food.quantity = 0
     food.save()
     return HttpResponseRedirect(reverse("foodOrder:index"))

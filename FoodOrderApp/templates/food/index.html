@@ -7,33 +7,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body>
-    <div class="container ">
+    <div class="container-fluid d-flex flex-column min-vh-100">
         <div class="row">
-            {%for food in foods %}
-                <div class="card m-2" style="width: 15rem;">
-                    <div class="card-header">{{food.name}}</div>
-                <!-- <img src="..." class="card-img-top" alt="..."> -->
-                    <div class="card-body mx-auto">
-                        <div class="card-text">Region : {{food.region}}</div>
-                        <div class="card-text">{{food.taset}}</div>
-                        <div class="card-text">Price : {{food.price}}</div>
-                        <form action="{% url  'foodOrder:updateQuantity' food.id %}" method="POST" class="container">
-                            {% csrf_token %}
-                            <div class="row my-1 text-center">
-                                <button type="submit" class="btn btn-sm btn-secondary col" name="action" value="decrease">-</button>
-                                <div class="card-text col">{{food.quantity}}</div>
-                                <button type="submit" class="btn btn-sm btn-secondary col" name="action" value="increase">+</button>
-                            </div>
-                            
-                            <div class="row">
+                {%for food in foods %}
+                    <div class="card m-2" style="width: 15rem;">
+                        <div class="card-header">{{food.name}}</div>
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                        <div class="card-body mx-auto">
+                            <div class="card-text">Region : {{food.region}}</div>
+                            <div class="card-text">{{food.taset}}</div>
+                            <div class="card-text">Price : {{food.price}}</div>
+                            <form action="{% url  'foodOrder:updateQuantity' food.id %}" method="POST" class="container">
+                                {% csrf_token %}
+                                <div class="row my-1 text-center">
+                                    <button type="submit" class="btn btn-sm btn-secondary col" name="action" value="decrease">-</button>
+                                    <div class="card-text col" name="quantity">{{food.quantity}}</div>
+                                    <!-- <input class="card-text col" type="text" name="quantity" value="{{quantity}}"/> -->
+                                    <button type="submit" class="btn btn-sm btn-secondary col" name="action" value="increase">+</button>
+                                </div>
+                                
+                                <div class="row">
 
-                                <button type="submit" class="btn btn-primary w-full" name="action" value="add">Add to Cart</button>
-                            </div>
-                        </form>
+                                    <button type="submit" class="btn btn-primary w-full" name="action" value="add">Add to Cart</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            {%endfor%}
-        </div>
+                {%empty%}
+                    <div class="text-center">No Food available</div>
+                {%endfor%}
+            
         <div class="row justify-content-center">
             <div class="col-auto">
                 <form action="{%url 'foodOrder:cart' %}" method="GET">
