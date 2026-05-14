@@ -51,3 +51,15 @@ def updateQuantity(request,food_id):
             food.quantity = 0
     food.save()
     return HttpResponseRedirect(reverse("foodOrder:index"))
+
+
+
+def removeQuantity(request,food_id):
+    food = get_object_or_404(Cart,pk=food_id)
+    if request.method == "POST":
+        action = request.POST['action']
+        if action == "remove":
+            food.quantity = 0
+        food.delete()
+
+    return HttpResponseRedirect(reverse("foodOrder:cart"))

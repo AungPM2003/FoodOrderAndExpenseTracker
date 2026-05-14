@@ -7,6 +7,9 @@ class Food(models.Model):
     region = models.CharField(max_length=20)
     taste = models.CharField(max_length=20)
     quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
     
 
 class Cart(models.Model):

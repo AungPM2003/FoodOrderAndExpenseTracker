@@ -25,6 +25,9 @@
             <div class="col text-center">
                 Total Price
             </div>
+            <div class="col text-center">
+            
+            </div>
         </div>
          {%for item in cart_items %}
         <div class="row justify-content-center">
@@ -40,6 +43,14 @@
                 </div>
                 <div class="col text-center">
                     $ {{item.total}}
+                    
+                </div>
+
+                <div class="col text-center">
+                    <form action="{% url 'foodOrder:removeQuantity' item.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" name="action" value="remove">Remove</button>
+                    </form>
                 </div>
             
         </div>
